@@ -182,6 +182,7 @@ bool debug_elaborate = false;
 bool debug_emit = false;
 bool debug_synth2 = false;
 bool debug_optimizer = false;
+bool debug_multi_driver_check = false;
 
 /*
  * Compilation control flags.
@@ -246,6 +247,7 @@ extern void synth(Design*des);
 extern void synth2(Design*des);
 extern void syn_rules(Design*des);
 extern void nodangle(Design*des);
+extern void multi_driver(Design*des);
 
 typedef void (*net_func)(Design*);
 static struct net_func_map {
@@ -258,6 +260,7 @@ static struct net_func_map {
       { "synth",       &synth },
       { "synth2",      &synth2 },
       { "syn-rules",   &syn_rules },
+      { "multi-driver",&multi_driver },
       { 0, 0 }
 };
 
@@ -660,6 +663,9 @@ static void read_iconfig_file(const char*ipath)
 		  } else if (strcmp(cp,"optimizer") == 0) {
 			debug_optimizer = true;
 			cerr << "debug: Enable optimizer debug" << endl;
+		  } else if (strcmp(cp, "multi-driver") == 0) {
+			debug_multi_driver_check = true;
+			cerr << "debug: Enable multi_driven_check debug" << endl;
 		  } else {
 		  }
 

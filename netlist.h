@@ -2743,6 +2743,7 @@ class NetProc : public virtual LineInfo {
 	// Check to see if the item is synthesizable.
       virtual bool check_synth(ivl_process_type_t pr_type, const NetScope*scope) const;
 
+      virtual void multi_driver_check() const;
     protected:
       bool synth_async_block_substatement_(Design*des, NetScope*scope,
 					   NexusSet&nex_map,
@@ -2775,6 +2776,7 @@ class NetAlloc  : public NetProc {
       virtual bool emit_proc(struct target_t*) const;
       virtual void dump(ostream&, unsigned ind) const;
 
+      virtual void multi_driver_check() const;
     private:
       NetScope*scope_;
 };
@@ -2946,6 +2948,8 @@ class NetAssignBase : public NetProc {
       virtual void dump(ostream&, unsigned ind) const;
       virtual bool check_synth(ivl_process_type_t pr_type, const NetScope*scope) const;
 
+      virtual void multi_driver_check() const;
+
     private:
       NetAssign_*lval_;
       NetExpr   *rval_;
@@ -3056,6 +3060,8 @@ class NetBlock  : public NetProc {
       virtual DelayType delay_type(bool print_delay=false) const;
       virtual bool check_synth(ivl_process_type_t pr_type, const NetScope*scope) const;
 
+      virtual void multi_driver_check() const;
+
     private:
       const Type type_;
       NetScope*subscope_;
@@ -3111,6 +3117,8 @@ class NetCase  : public NetProc {
       virtual bool check_synth(ivl_process_type_t pr_type, const NetScope*scope) const;
       virtual bool evaluate_function(const LineInfo&loc,
 				     map<perm_string,LocalVar>&ctx) const;
+
+      virtual void multi_driver_check() const;
 
     private:
       bool evaluate_function_vect_(const LineInfo&loc,
@@ -3205,6 +3213,8 @@ class NetCondit  : public NetProc {
       virtual bool evaluate_function(const LineInfo&loc,
 				     map<perm_string,LocalVar>&ctx) const;
 
+      virtual void multi_driver_check() const;
+
     private:
       NetExpr* expr_;
       NetProc*if_;
@@ -3227,6 +3237,8 @@ class NetContribution : public NetProc {
 
       virtual bool emit_proc(struct target_t*) const;
       virtual void dump(ostream&, unsigned ind) const;
+
+      virtual void multi_driver_check() const;
 
     private:
       NetEAccess*lval_;
@@ -3280,6 +3292,8 @@ class NetDisable  : public NetProc {
       virtual bool evaluate_function(const LineInfo&loc,
 				     map<perm_string,LocalVar>&ctx) const;
 
+      virtual void multi_driver_check() const;
+
     private:
       NetScope*target_;
 
@@ -3313,6 +3327,7 @@ class NetDoWhile  : public NetProc {
       virtual bool evaluate_function(const LineInfo&loc,
 				     map<perm_string,LocalVar>&ctx) const;
 
+      virtual void multi_driver_check() const;
     private:
       NetExpr* cond_;
       NetProc*proc_;
@@ -3445,6 +3460,7 @@ class NetEvTrig  : public NetProc {
       virtual void dump(ostream&, unsigned ind) const;
       virtual bool check_synth(ivl_process_type_t pr_type, const NetScope*scope) const;
 
+      virtual void multi_driver_check() const;
     private:
       NetEvent*event_;
 	// This is used to place me in the NetEvents lists of triggers.
@@ -3503,6 +3519,8 @@ class NetEvWait  : public NetProc {
       virtual void dump_inline(ostream&) const;
       virtual DelayType delay_type(bool print_delay=false) const;
       virtual bool check_synth(ivl_process_type_t pr_type, const NetScope*scope) const;
+
+      virtual void multi_driver_check() const;
 
     private:
       NetProc*statement_;
@@ -3578,6 +3596,8 @@ class NetForever : public NetProc {
       virtual bool evaluate_function(const LineInfo&loc,
 				     map<perm_string,LocalVar>&ctx) const;
 
+      virtual void multi_driver_check() const;
+
     private:
       NetProc*statement_;
 };
@@ -3608,6 +3628,8 @@ class NetForLoop : public NetProc {
 		       NexusSet&nex_map, NetBus&nex_out,
 		       NetBus&enables, vector<mask_t>&bitmasks);
 
+      virtual void multi_driver_check() const;
+
     private:
       NetNet*index_;
       NetExpr*init_expr_;
@@ -3637,6 +3659,8 @@ class NetFree   : public NetProc {
       virtual void nex_output(NexusSet&);
       virtual bool emit_proc(struct target_t*) const;
       virtual void dump(ostream&, unsigned ind) const;
+
+      virtual void multi_driver_check() const;
 
     private:
       NetScope*scope_;
@@ -3716,6 +3740,8 @@ class NetPDelay  : public NetProc {
 
       bool emit_proc_recurse(struct target_t*) const;
 
+      virtual void multi_driver_check() const;
+
     private:
       uint64_t delay_;
       NetExpr*expr_;
@@ -3743,6 +3769,8 @@ class NetRepeat : public NetProc {
       virtual bool check_synth(ivl_process_type_t pr_type, const NetScope*scope) const;
       virtual bool evaluate_function(const LineInfo&loc,
 				     map<perm_string,LocalVar>&ctx) const;
+
+      virtual void multi_driver_check() const;
 
     private:
       NetExpr*expr_;
@@ -3797,6 +3825,8 @@ class NetSTask  : public NetProc {
       virtual bool check_synth(ivl_process_type_t pr_type, const NetScope*scope) const;
       virtual bool evaluate_function(const LineInfo&loc,
 				     map<perm_string,LocalVar>&ctx) const;
+
+      virtual void multi_driver_check() const;
 
     private:
       const char* name_;
@@ -3950,6 +3980,8 @@ class NetUTask  : public NetProc {
       virtual DelayType delay_type(bool print_delay=false) const;
       virtual bool check_synth(ivl_process_type_t pr_type, const NetScope*scope) const;
 
+      virtual void multi_driver_check() const;
+
     private:
       NetScope*task_;
 };
@@ -3978,6 +4010,8 @@ class NetWhile  : public NetProc {
       virtual bool check_synth(ivl_process_type_t pr_type, const NetScope*scope) const;
       virtual bool evaluate_function(const LineInfo&loc,
 				     map<perm_string,LocalVar>&ctx) const;
+
+      virtual void multi_driver_check() const;
 
     private:
       NetExpr*cond_;

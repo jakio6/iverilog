@@ -116,6 +116,7 @@ extern bool debug_elaborate;
 extern bool debug_emit;
 extern bool debug_synth2;
 extern bool debug_optimizer;
+extern bool debug_multi_driver_check;
 
 /* Ignore errors about missing modules */
 extern bool ignore_missing_modules;

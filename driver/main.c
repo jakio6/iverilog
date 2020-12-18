@@ -638,6 +638,8 @@ static void process_warning_switch(const char*name)
 		  cp[0] = cp[1];
 		  cp += 1;
 	    }
+      } else if (strcmp(name, "multi-driver") == 0) {
+	      fprintf(iconfig_file, "functor:multi-driver\n");
       } else {
 	    fprintf(stderr, "Ignoring unknown warning class "
 		    "%s\n", name);
